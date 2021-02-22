@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
       function getZero(num) {
          if (num >= 0 && num < 10) {
-            return  `0${num}`;   
+            return `0${num}`;   
          } else {
             return num;
          }
@@ -26,9 +26,6 @@ window.addEventListener('DOMContentLoaded', function() {
       
       function updateClock() {
          let timer = getTimeRemainig();
-
-         
-         
 
          if(timer.timeRemaining > 0) {
             setInterval(updateClock, 1000);
