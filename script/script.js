@@ -23,23 +23,20 @@ window.addEventListener('DOMContentLoaded', function() {
             return num;
          }
       }
-      
-      function updateClock() {
-         let timer = getTimeRemainig();
 
-         if(timer.timeRemaining > 0) {
-            setInterval(updateClock, 1000);
+      let id = setInterval(function () {
+         let timer = getTimeRemainig();
+         if (timer.timeRemaining > 0) {
             timerHours.textContent = getZero(timer.hours);
             timerMinutes.textContent = getZero(timer.minutes);
             timerSeconds.textContent = getZero(timer.seconds);
-         }  else if (timer.timeRemaining <= 0) {
-            clearInterval(setInterval(updateClock, 1000));
+         } else  if (timer.timeRemaining <= 0) {
+            clearInterval(id);
             timerHours.textContent = '00';
             timerMinutes.textContent = '00';
             timerSeconds.textContent = '00';
-         }  
-      } 
-      updateClock();
+         }
+      }, 1000);
    }
    countTimer('23 february 2021');
 });
