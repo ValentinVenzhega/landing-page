@@ -28,14 +28,15 @@ window.addEventListener('DOMContentLoaded', function() {
          timer = date.toLocaleTimeString("en-US"),
          day = date.getDay(),
          hours = date.getHours();
+         console.log(hours);
 
-      if (hours >= 4 && hours <= 11) {
+      if (hours >= 5 && hours <= 11) {
          welcom.innerHTML = 'Доброе утро';
       } else if (hours > 11 && hours <= 16) {
          welcom.innerHTML = 'Добрый день';
-      } else if (hours > 16 && hours <= 22) {
+      } else if (hours > 16 && hours < 24) {
          welcom.innerHTML = 'Добрый вечер';
-      } else if (hours > 22 && hours < 4) {
+      } else if (hours >= 0 && hours < 5) {
          welcom.innerHTML = 'Доброй ночи';
       }
 
