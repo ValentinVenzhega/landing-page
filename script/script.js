@@ -96,7 +96,7 @@ window.addEventListener('DOMContentLoaded', function() {
       framesCount = 20;
       e.preventDefault();
       // находим нужный атрибут
-      let id = e.target.getAttribute('href');
+      let id = e.currentTarget.getAttribute('href');
       // находим  нужную секцию
       let blockCoord = document.querySelector(id);
       // для каждого якоря берем соответствующий ему элемент и определяем его координату Y
@@ -128,4 +128,3 @@ window.addEventListener('DOMContentLoaded', function() {
    };
    scrollBlock();
 });
-
