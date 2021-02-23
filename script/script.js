@@ -12,8 +12,7 @@ window.addEventListener('DOMContentLoaded', function() {
       popupContent = document.querySelector('.popup-content'),
       // прокрутка
       elemLink = document.querySelectorAll('ul>li>a'),
-      btn = document.querySelector('main>a');
-      console.log(btn);
+      btnMouse = document.querySelector('main>a');
 
 
    function countTimer(deadline) {
@@ -125,7 +124,7 @@ window.addEventListener('DOMContentLoaded', function() {
       elemLink.forEach((item) => {
          item.addEventListener('click', scrollDown);
       });
-      btn.addEventListener('click', scrollDown);
+      btnMouse.addEventListener('click', scrollDown);
    };
    scrollBlock();
 });
