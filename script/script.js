@@ -1,6 +1,21 @@
 window.addEventListener('DOMContentLoaded', function() {
    'use strict';
 
+   const btnMenu = document.querySelector('.menu'), // menu
+      menu = document.querySelector('menu'),
+      closeBtn = document.querySelector('.close-btn'),
+      menuItems = menu.querySelectorAll('ul>li'),
+      // мрдальное окно
+      popup = document.querySelector('.popup'),
+      popupBtn = document.querySelectorAll('.popup-btn'),
+      popupClose = document.querySelector('.popup-close'),
+      popupContent = document.querySelector('.popup-content'),
+      // прокрутка
+      elemLink = document.querySelectorAll('ul>li>a'),
+      btn = document.querySelector('main>a');
+      console.log(btn);
+
+
    function countTimer(deadline) {
       let timerHours = document.querySelector('#timer-hours'),
          timerMinutes = document.querySelector('#timer-minutes'),
@@ -39,4 +54,79 @@ window.addEventListener('DOMContentLoaded', function() {
       }, 1000);
    }
    countTimer('23 february 2021');
+   // меню
+   const toggleMenu = () => {
+      const handlerMenu = () => {
+         menu.classList.toggle('active-menu');
+      };
+      btnMenu.addEventListener('click', handlerMenu);
+      closeBtn.addEventListener('click', handlerMenu);
+      menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
+   };
+   toggleMenu();
+
+   //модальное окно
+   const togglePopUp = () => {
+      popupBtn.forEach((elem) => {
+         elem.addEventListener('click', () => {
+            popup.style.display = 'block';
+            let start = Date.now();
+            let timer = setInterval(function() {
+               let timePassed = Date.now() - start;
+               popupContent.style.left = timePassed / 5 + '%';
+               if (timePassed > 200 ) clearInterval(timer);
+               if (window.innerWidth < 768) {
+                  clearInterval(timer);
+                  popupContent.style.left = '';
+               } 
+            });
+               
+         });
+      });
+
+      popupClose.addEventListener('click', () => {
+         popup.style.display = 'none';
+         popupContent.style.left = 0;
+      });
+   };
+   togglePopUp();
+
+   // функция прокрутки
+   const scrollDown = (e) => {
+      let animationTime = 300,
+      framesCount = 20;
+      e.preventDefault();
+      // находим нужный атрибут
+      let id = e.target.getAttribute('href');
+      // находим  нужную секцию
+      let blockCoord = document.querySelector(id);
+      // для каждого якоря берем соответствующий ему элемент и определяем его координату Y
+      let coordY = blockCoord.getBoundingClientRect().top + window.pageYOffset;
+      // запускаем интервал, в котором
+      let scroller = setInterval(() => {
+         // считаем на сколько скроллить за 1 такт
+         let scrollBy = coordY / framesCount;
+         // если к-во пикселей для скролла за 1 такт больше расстояния до элемента
+         // и дно страницы не достигнуто
+         if(scrollBy > window.pageYOffset - coordY && window.innerHeight + window.pageYOffset < document.body.offsetHeight) {
+         // то скроллим на к-во пикселей, которое соответствует одному такту
+         window.scrollBy(0, scrollBy);
+         } else {
+         // иначе добираемся до элемента и выходим из интервала
+         window.scrollTo(0, coordY);
+         clearInterval(scroller);
+         }
+      // время интервала равняется частному от времени анимации и к-ва кадров
+      }, animationTime / framesCount);
+   };
+
+   // прокрутка страницы
+   const scrollBlock = () => {
+      elemLink.forEach((item) => {
+         item.addEventListener('click', scrollDown);
+      });
+      btn.addEventListener('click', scrollDown);
+   };
+   scrollBlock();
 });
+
