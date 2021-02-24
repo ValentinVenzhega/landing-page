@@ -96,7 +96,6 @@ window.addEventListener('DOMContentLoaded', function() {
             popup.style.display = 'none';
          } else {
             target = target.closest('.popup-content');
-            console.log(target);
             if (!target) {
                popup.style.display = 'none';
             }
