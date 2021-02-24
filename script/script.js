@@ -10,7 +10,6 @@ window.addEventListener('DOMContentLoaded', function() {
       elemLink = document.querySelectorAll('ul>li>a'),
       btnMouse = document.querySelector('main>a');
 
-
    function countTimer(deadline) {
       let timerHours = document.querySelector('#timer-hours'),
          timerMinutes = document.querySelector('#timer-minutes'),
