@@ -100,7 +100,6 @@ window.addEventListener('DOMContentLoaded', function() {
                popup.style.display = 'none';
             }
          }
-         
       });
    };
    togglePopUp();
@@ -176,6 +175,7 @@ window.addEventListener('DOMContentLoaded', function() {
    };
    tabs();
 
+   // слайдер
    const slider = () => {
       const slide = document.querySelectorAll('.portfolio-item'),
          btn = document.querySelectorAll('.portfolio-btn'),
@@ -225,7 +225,7 @@ window.addEventListener('DOMContentLoaded', function() {
       slider.addEventListener('click', (event) => {
          event.preventDefault();
 
-         let target = event.target;
+         const target = event.target;
 
          if (!target.matches('.portfolio-btn, .dot')) {
             return;
@@ -269,9 +269,7 @@ window.addEventListener('DOMContentLoaded', function() {
             startSlide();
          }
       });
-
       startSlide(1500);
-
    };
    slider();
 });
