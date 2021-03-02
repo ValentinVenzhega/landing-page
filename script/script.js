@@ -295,7 +295,6 @@ window.addEventListener('DOMContentLoaded', function() {
             elem.addEventListener('mouseenter', (event) => {
                const target = event.target;
                target.src = target.dataset.img;
-               console.log(target);
             }); 
             elem.addEventListener('mouseleave', (event) => {
                const target = event.target;
