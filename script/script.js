@@ -48,7 +48,7 @@ window.addEventListener('DOMContentLoaded', function() {
       }, 1000);
    }
    countTimer('23 february 2021');
-   
+
    // меню
    const toggleMenu = () => {
 
@@ -298,8 +298,8 @@ window.addEventListener('DOMContentLoaded', function() {
             }); 
             elem.addEventListener('mouseleave', (event) => {
                const target = event.target;
-               const reg = /http?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i
-               target.src.match(reg);
+               // const reg = /http?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i;
+               // target.src.match(reg);
             }); 
          });
       };
