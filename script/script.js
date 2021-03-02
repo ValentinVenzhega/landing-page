@@ -48,6 +48,7 @@ window.addEventListener('DOMContentLoaded', function() {
       }, 1000);
    }
    countTimer('23 february 2021');
+   
    // меню
    const toggleMenu = () => {
 
@@ -256,7 +257,6 @@ window.addEventListener('DOMContentLoaded', function() {
       });
 
       slider.addEventListener('mouseover', (event) => {
-         console.log(event.target);
          if (event.target.closest('.portfolio-content')) {
             stopSlide();
          }
@@ -270,4 +270,139 @@ window.addEventListener('DOMContentLoaded', function() {
       startSlide(1500);
    };
    slider();
+
+   // валидация на сайте
+   const validForm = () => {
+      const form = document.querySelectorAll('form'),
+         calcItem = document.querySelectorAll('.calc-item'),
+         commandPhoto = document.querySelectorAll('.command__photo'),
+
+         regName = /^[А-Яа-я\- ]{3,20}$/,
+         regEmail = /^[a-zA-Z0-9-._~*'!]+@[a-z]+\.[a-z]{2,3}$/,
+         regPhone = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+         regMessage = /^[А-Яа-я\- ]{3,250}$/;
+
+         let isValidate = false;
+
+      // разрешен ввод только цифр
+      calcItem.forEach(item => {
+         item.addEventListener('input', () => item.value = item.value.replace (/\D/, ''));
+      });
+
+      // смена фото
+      const showFoto = () => {
+         commandPhoto.forEach(elem => {
+            elem.addEventListener('mouseenter', (event) => {
+               const target = event.target;
+               target.src = target.dataset.img;
+            }); 
+            elem.addEventListener('mouseleave', (event) => {
+               const target = event.target;
+               const reg = /http?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i
+               target.src.match(reg);
+            }); 
+         });
+      };
+      showFoto();
+
+      // переводим каждое слово с большой буквы
+      const substr = (elem) => {
+         let words = elem.value.split(' ');
+         
+         for (let i = 0; i < words.length; i++) {
+            // Увеличим регистр каждого слова:
+            words[i] = words[i].slice(0, 1).toUpperCase() + words[i].slice(1).toLowerCase();
+         }
+         // Сольем массив обратно в строку:
+         let result = words.join(' ');
+      };
+
+      const validInput = (elem) => {
+         elem.value = elem.value.replace(/-{2,}/g, '-');
+         elem.value = elem.value.replace(/\s{2,}/g, ' ');
+         elem.value = elem.value.replace(/^[ \s]+|[ \s]+$/, '');
+         elem.value = elem.value.replace(/^[/-]+|[/-]+$/, '');
+      };
+      // валидация инпутов
+      const validateElem = (elem) => {
+         if (elem.name === 'user_name' && elem.value !== '') {
+            if (!regName.test(elem.value)) {
+               alert('поле "Ваше имя" заполнено не корректно');
+               elem.value = '';
+               isValidate = false;  
+                  
+            } else {
+               isValidate = true;
+               substr(elem);
+               validInput(elem);
+            }
+         }
+         if (elem.name === 'user_email' && elem.value !== '') {
+            if (!regEmail.test(elem.value)) {
+               alert('поле "E-mail" заполнено не корректно');
+               elem.value = '';
+               isValidate = false; 
+            } else {
+               isValidate = true;
+               validInput(elem);
+            }
+         }
+         if (elem.name === 'user_phone' && elem.value !== '') {
+            if (!regPhone.test(elem.value)) {
+               alert('поле "Номер телефона" заполнено не корректно');
+               elem.value = '';
+               isValidate = false; 
+            } else {
+               isValidate = true;
+               validInput(elem);
+            }
+         }
+         if (elem.name === 'user_message' && elem.value !== '') {
+            if (!regMessage.test(elem.value)) {
+               alert('поле "Ваше сообщение" заполнено не корректно');
+               elem.value = '';
+               isValidate = false; 
+            } else {
+               isValidate = true;
+               validInput(elem);
+            }
+         }
+      };
+
+      const submit = () => {
+         alert('данные отправлены');
+      };
+
+      // перебираем наши формы
+      form.forEach(item => {
+         for (let elem of item.elements) {
+            if (elem.tagName !== 'BUTTON') {
+               elem.addEventListener('blur', () => {
+                  validateElem(elem);
+               });
+            }
+         }
+
+         item.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            for (let elem of item.elements) {
+               if (elem.tagName !== 'BUTTON') {
+                  if (elem.value === '') {
+                     alert('поля не заполнены');
+                     isValidate = false;
+                  } else {
+                     isValidate = true;
+                  }
+               }
+            }
+
+            if (isValidate) {
+               submit();
+               form.reset();
+            }
+         });
+      });
+   };
+   validForm();
 });
