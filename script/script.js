@@ -416,14 +416,17 @@ window.addEventListener('DOMContentLoaded', function() {
       calcCount = document.querySelector('.calc-count'),
       totalValue = document.getElementById('total');
 
+      
+
       // num - число, elem -куда будем записывать
       const outNum = (num, elem) => {
+
+         let count = 0;
+
          const time = 1500, // время
             step = 100, // шаг
             timeStep = Math.round(time/(num/step)), // колличество шагов
-
             interval = setInterval(() => {
-               let count = 0;
                count = count + step;
                if (count >= num) {
                   clearInterval(interval);
@@ -452,7 +455,7 @@ window.addEventListener('DOMContentLoaded', function() {
          if (typeValue && squareValue) {
             total = price * typeValue * squareValue * countValue * dayValue;
          }
-
+         totalValue.textContent = total;
          outNum(total, totalValue);
       };
    
