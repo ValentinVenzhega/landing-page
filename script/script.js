@@ -316,6 +316,7 @@ window.addEventListener('DOMContentLoaded', function() {
          }
          // Сольем массив обратно в строку:
          let result = words.join(' ');
+         elem.value = result;
       };
 
       const validInput = (elem) => {
