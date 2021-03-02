@@ -292,7 +292,8 @@ window.addEventListener('DOMContentLoaded', function() {
    // валидация на сайте
    const validForm = () => {
       const form = document.querySelectorAll('form'),
-         calcItem = document.querySelectorAll('.calc-item'),
+         calcBlock = document.querySelector('.calc-block'),
+         calcItem = calcBlock.querySelectorAll('input'),
 
          regName = /^[А-Яа-я\- ]{3,20}$/,
          regEmail = /^[a-zA-Z0-9-._~*'!]+@[a-z]+\.[a-z]{2,3}$/,
@@ -415,8 +416,6 @@ window.addEventListener('DOMContentLoaded', function() {
       calcDay = document.querySelector('.calc-day'),
       calcCount = document.querySelector('.calc-count'),
       totalValue = document.getElementById('total');
-
-      
 
       // num - число, elem -куда будем записывать
       const outNum = (num, elem) => {
