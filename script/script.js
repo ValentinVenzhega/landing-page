@@ -271,11 +271,28 @@ window.addEventListener('DOMContentLoaded', function() {
    };
    slider();
 
+   // смена фото
+   const showFoto = () => {
+      const  commandPhoto = document.querySelectorAll('.command__photo');
+
+      commandPhoto.forEach(elem => {
+         elem.addEventListener('mouseenter', (event) => {
+            const target = event.target;
+            target.src = target.dataset.img;
+         }); 
+         elem.addEventListener('mouseleave', (event) => {
+            const target = event.target;
+            // удаляю http://127.0.0.1:5500/    // удаляю a перед точкой
+            target.src = (target.src.replace(/^.*?:\/\/.*?(?=\/|$)\//,'')).replace(/a\./, '.');
+         }); 
+      });
+   };
+   showFoto();
+
    // валидация на сайте
    const validForm = () => {
       const form = document.querySelectorAll('form'),
          calcItem = document.querySelectorAll('.calc-item'),
-         commandPhoto = document.querySelectorAll('.command__photo'),
 
          regName = /^[А-Яа-я\- ]{3,20}$/,
          regEmail = /^[a-zA-Z0-9-._~*'!]+@[a-z]+\.[a-z]{2,3}$/,
@@ -288,22 +305,6 @@ window.addEventListener('DOMContentLoaded', function() {
       calcItem.forEach(item => {
          item.addEventListener('input', () => item.value = item.value.replace (/\D/, ''));
       });
-
-      // смена фото
-      const showFoto = () => {
-         commandPhoto.forEach(elem => {
-            elem.addEventListener('mouseenter', (event) => {
-               const target = event.target;
-               target.src = target.dataset.img;
-            }); 
-            elem.addEventListener('mouseleave', (event) => {
-               const target = event.target;
-               // удаляю http://127.0.0.1:5500/    // удаляю a перед точкой
-               target.src = (target.src.replace(/^.*?:\/\/.*?(?=\/|$)\//,'')).replace(/a\./, '.');
-            }); 
-         });
-      };
-      showFoto();
 
       // переводим каждое слово с большой буквы
       const substr = (elem) => {
