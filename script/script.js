@@ -295,11 +295,12 @@ window.addEventListener('DOMContentLoaded', function() {
             elem.addEventListener('mouseenter', (event) => {
                const target = event.target;
                target.src = target.dataset.img;
+               console.log(target);
             }); 
             elem.addEventListener('mouseleave', (event) => {
                const target = event.target;
-               // const reg = /http?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i;
-               // target.src.match(reg);
+               // удаляю http://127.0.0.1:5500/    // удаляю a перед точкой
+               target.src = (target.src.replace(/^.*?:\/\/.*?(?=\/|$)\//,'')).replace(/a\./, '.');
             }); 
          });
       };
