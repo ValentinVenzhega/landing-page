@@ -422,16 +422,16 @@ window.addEventListener('DOMContentLoaded', function() {
 
          let count = 0;
 
-         const time = 1500, // время
-            step = num * 20 / 100, // шаг
+         const time = 50, // время
+            step = num * 10 / 100, // шаг
             timeStep = Math.round(time/(num/step)), // колличество шагов
             interval = setInterval(() => {
-               count = count + step;
+               count += step;
                if (count >= num) {
                   clearInterval(interval);
                }
                elem.innerHTML = count;
-         }, timeStep);
+         }, time);
       };
       
       const countSum = () => {
