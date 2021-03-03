@@ -4,14 +4,11 @@ class Validator {
       this.pattern = pattern;
       this.method = method;
 
-      this.form = document.querySelectorAll(selector);
-      this.form.forEach(items => {
-         this.elementsForm = [...items.elements].filter(item => {
-            return item.tagName.toLowerCase() !== 'button' &&
-            item.type !== 'button';
-         });
+      this.form = document.querySelector(selector);
+      this.elementsForm = [...this.form.elements].filter(item => {
+         return item.tagName.toLowerCase() !== 'button' &&
+         item.type !== 'button';
       });
-      
       this.error = new Set();
    }
 
@@ -19,17 +16,11 @@ class Validator {
       this.applyStyle();
       this.setPattern();
       this.elementsForm.forEach(elem => elem.addEventListener('change', this.chekIt.bind(this)));
-      this.form.forEach(item => {
-         item.addEventListener('submit', e => {
-            this.elementsForm.forEach(elem => {
-               e.preventDefault();
-               this.chekIt({ target: elem });
-               console.log({ target: elem });
-            } );
-            if (this.error.size) {
-               
-            }
-         });
+      this.form.addEventListener('submit', e => {
+         this.elementsForm.forEach(elem => this.chkIt({ target: elem }));
+         if (this.error.size) {
+            e.preventDefault();
+         }
       });
    }
 
@@ -53,7 +44,7 @@ class Validator {
             return method.every(item => validatorMethod[item[0]](elem, this.pattern[item[1]]));
          }
       } else {
-         console.warn('Необходимо передать name полей ввода и методы проверки этих полей');
+         console.warn('Необходимо передать id полей ввода и методы проверки этих полей');
       }
 
       return true;
@@ -68,6 +59,7 @@ class Validator {
          this.showError(target);
          this.error.add(target);
       }
+      console.log(this.error);
    }
 
    
@@ -82,6 +74,7 @@ class Validator {
       const errorDiv = document.createElement('div');
       errorDiv.textContent = 'Ошибка в этом поле';
       errorDiv.classList.add('validator-error');
+      console.log(elem);
       elem.insertAdjacentElement('afterend', errorDiv);
    }
 
@@ -106,9 +99,11 @@ class Validator {
             font-size: 12px;
             font-family: sans-serif;
             color: red;
+            margin-top: -20px;
          }
       `;
       document.head.appendChild(style);
+
    }
 
    setPattern() {
@@ -119,13 +114,14 @@ class Validator {
       if (!this.pattern.email) {
          this.pattern.email = /^[a-zA-Z0-9-._~*'!]+@[a-z]+\.[a-z]{2,3}$/;
       }
-      
+
       if (!this.pattern.name) {
          this.pattern.name = /^[А-Яа-я\- ]{3,20}$/;
       }
-      
+
       if (!this.pattern.message) {
          this.pattern.message = /^[А-Яа-я\- ]{3,250}$/;
       }
+
    }
 }
