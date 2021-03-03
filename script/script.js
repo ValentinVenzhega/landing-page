@@ -424,7 +424,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
          const time = 50, // время
             step = num * 10 / 100, // шаг
-            timeStep = Math.round(time/(num/step)), // колличество шагов
             interval = setInterval(() => {
                count += step;
                if (count >= num) {
