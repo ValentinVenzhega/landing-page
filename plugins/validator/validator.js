@@ -1,22 +1,62 @@
 class Validator {
-   constructor({ selector, pattern, method }) {
-      this.form = document.querySelector(selector);
+   constructor({ selector, pattern = {}, method }) {
+      
       this.pattern = pattern;
       this.method = method;
-      this.elementsForm = [...this.form.elements].filter(item => {
-         return item.tagName.toLowerCase() !== 'button' &&
-         item.type !== 'button';
+
+      this.form = document.querySelectorAll(selector);
+      this.form.forEach(items => {
+         this.elementsForm = [...items.elements].filter(item => {
+            return item.tagName.toLowerCase() !== 'button' &&
+            item.type !== 'button';
+         });
       });
+      
       this.error = new Set();
    }
 
    init() {
       this.applyStyle();
+      this.setPattern();
       this.elementsForm.forEach(elem => elem.addEventListener('change', this.chekIt.bind(this)));
+      this.form.forEach(item => {
+         item.addEventListener('submit', e => {
+            this.elementsForm.forEach(elem => {
+               e.preventDefault();
+               this.chekIt({ target: elem });
+               console.log({ target: elem });
+            } );
+            if (this.error.size) {
+               
+            }
+         });
+      });
    }
 
    isValid(elem) {
-      return false;
+      const validatorMethod = {
+         notEmpty(elem) {
+            if (elem.value.trim() === '') {
+               return false;
+            } else {
+               return true;
+            }
+         },
+         pattern(elem, pattern) {
+            return pattern.test(elem.value);
+         }
+      };
+
+      if(this.method) {
+         const method = this.method[elem.name];
+         if (method) {
+            return method.every(item => validatorMethod[item[0]](elem, this.pattern[item[1]]));
+         }
+      } else {
+         console.warn('Необходимо передать name полей ввода и методы проверки этих полей');
+      }
+
+      return true;
    }
 
    chekIt(event) {
@@ -28,29 +68,27 @@ class Validator {
          this.showError(target);
          this.error.add(target);
       }
-      console.log(this.error);
    }
 
    
 
    showError(elem) {
+      elem.classList.remove('success');
+      elem.classList.add('error');
+      if (elem.nextElementSibling && elem.nextElementSibling.classList.contains('validator-error')) {
+         return;
+      }
+
       const errorDiv = document.createElement('div');
       errorDiv.textContent = 'Ошибка в этом поле';
       errorDiv.classList.add('validator-error');
-      console.log(elem);
       elem.insertAdjacentElement('afterend', errorDiv);
-
-      elem.classList.remove('success');
-      elem.classList.add('error');
-      if (elem.nextElementSibling.classList.contains('validator-error')) {
-         return;
-      }
    }
 
    showSuccess(elem) {
       elem.classList.remove('error');
       elem.classList.add('success');
-      if (elem.nextElementSibling.classList.contains('validator-error')) {
+      if (elem.nextElementSibling && elem.nextElementSibling.classList.contains('validator-error')) {
          elem.nextElementSibling.remove();
       }
    }
@@ -71,6 +109,23 @@ class Validator {
          }
       `;
       document.head.appendChild(style);
+   }
 
+   setPattern() {
+      if (!this.pattern.phone) {
+         this.pattern.phone = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/;
+      }
+
+      if (!this.pattern.email) {
+         this.pattern.email = /^[a-zA-Z0-9-._~*'!]+@[a-z]+\.[a-z]{2,3}$/;
+      }
+      
+      if (!this.pattern.name) {
+         this.pattern.name = /^[А-Яа-я\- ]{3,20}$/;
+      }
+      
+      if (!this.pattern.message) {
+         this.pattern.message = /^[А-Яа-я\- ]{3,250}$/;
+      }
    }
 }
