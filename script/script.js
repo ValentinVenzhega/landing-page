@@ -407,7 +407,7 @@ window.addEventListener('DOMContentLoaded', function() {
          });
       });
    };
-   validForm();
+   // validForm();
 
   
    const calc = (price = 100) => {
