@@ -409,6 +409,7 @@ window.addEventListener('DOMContentLoaded', function() {
    };
    validForm();
 
+  
    const calc = (price = 100) => {
       const calcBlock= document.querySelector('.calc-block'),
       calcType = document.querySelector('.calc-type'),
@@ -453,7 +454,6 @@ window.addEventListener('DOMContentLoaded', function() {
          if (typeValue && squareValue) {
             total = price * typeValue * squareValue * countValue * dayValue;
          }
-
          outNum(total, totalValue);
       };
    
