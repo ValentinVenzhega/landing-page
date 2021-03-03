@@ -454,6 +454,7 @@ window.addEventListener('DOMContentLoaded', function() {
          if (typeValue && squareValue) {
             total = price * typeValue * squareValue * countValue * dayValue;
          }
+
          outNum(total, totalValue);
       };
    
