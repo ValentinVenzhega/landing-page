@@ -87,16 +87,17 @@ class Validator {
    applyStyle() {
       const style = document.createElement('style');
       style.textContent = `
-         .main-form input.success {
+         
+         .connect .footer-form input.error {
+            border: 2px solid red;
+         }
+         .connect .footer-form input.success {
             border: 2px solid green;
          }
-         .main-form input.error {
+         .popup input.error {
             border: 2px solid red;
          }
-         .top-form input.error {
-            border: 2px solid red;
-         }
-         .top-form input.success {
+         .popup input.success {
             border: 2px solid green;
          }
          .validator-error {
