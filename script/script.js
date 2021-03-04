@@ -380,10 +380,7 @@ window.addEventListener('DOMContentLoaded', function() {
                if (elem.tagName !== 'BUTTON') {
                   if (elem.value === '') {
                      alert('поля не заполнены');
-                     isValidate = false;
-                  } else {
-                     isValidate = true;
-                  }
+                  } 
                }
             }
          });
@@ -448,22 +445,24 @@ window.addEventListener('DOMContentLoaded', function() {
    };
    calc(100);
 
+
+
    // send-ajax-form
    const sendForm = () => {
       const errorMessage = 'Что-то пощло е так',
-         loadMessage = 'Загрузка...',
-         successMessage = 'Спасибо! Мы скоро с вами свяжемся';
+         loadMessage = 'загрузка ...',
+         successMessage = 'Спасибо! Мы скоро с вами свяжемся',
 
-      const form = document.querySelectorAll('form');
-      console.log(form);
-      const statusMessage = document.createElement('div');
+         form = document.querySelectorAll('form'),
+         statusMessage = document.createElement('div');
+
       statusMessage.style.cssText = 'font-size: 2rem; color: #ffffff';
 
       form.forEach (elem => {
          elem.addEventListener('submit', (event) => {
             event.preventDefault();
             elem.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+            statusMessage.append(loadMessage);
    
             const formData = new FormData(elem); // получаем данные через объект formData (создаем экземпляр класса form Data)
             let body = {}; // создаем объект и будет оправлять его на сервер
