@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
    //модальное окно
    const togglePopUp = () => {
-
+      const formThree = document.querySelector('#form3');
       popupBtn.forEach((elem) => {
          elem.addEventListener('click', () => {
             popup.style.display = 'block';
@@ -95,10 +95,13 @@ window.addEventListener('DOMContentLoaded', function() {
          let target = event.target;
          if (target.classList.contains('popup-close')) {
             popup.style.display = 'none';
+            formThree.reset();
          } else {
             target = target.closest('.popup-content');
             if (!target) {
                popup.style.display = 'none';
+               formThree.reset();
+               
             }
          }
       });
@@ -402,7 +405,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
             if (isValidate) {
                submit();
-               form.reset();
+               item.reset();
             }
          });
       });

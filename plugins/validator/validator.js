@@ -62,8 +62,6 @@ class Validator {
       console.log(this.error);
    }
 
-   
-
    showError(elem) {
       elem.classList.remove('success');
       elem.classList.add('error');
@@ -94,6 +92,12 @@ class Validator {
          }
          .main-form input.error {
             border: 2px solid red;
+         }
+         .top-form input.error {
+            border: 2px solid red;
+         }
+         .top-form input.success {
+            border: 2px solid green;
          }
          .validator-error {
             font-size: 12px;
