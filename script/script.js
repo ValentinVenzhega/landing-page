@@ -412,7 +412,6 @@ window.addEventListener('DOMContentLoaded', function() {
    };
    // validForm();
 
-  
    const calc = (price = 100) => {
       const calcBlock= document.querySelector('.calc-block'),
       calcType = document.querySelector('.calc-type'),
