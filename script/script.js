@@ -297,12 +297,10 @@ window.addEventListener('DOMContentLoaded', function() {
          calcBlock = document.querySelector('.calc-block'),
          calcItem = calcBlock.querySelectorAll('input'),
 
-         regName = /^[А-Яа-я\- ]{3,20}$/,
+         regName = /^[А-Яа-я ]{3,20}$/,
          regEmail = /^[a-zA-Z0-9-._~*'!]+@[a-z]+\.[a-z]{2,3}$/,
          regPhone = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
-         regMessage = /^[А-Яа-я\- ]{3,250}$/;
-
-         let isValidate = false;
+         regMessage = /^[А-Яа-я0-9 ]{3,250}$/;
 
       // разрешен ввод только цифр
       calcItem.forEach(item => {
@@ -334,10 +332,7 @@ window.addEventListener('DOMContentLoaded', function() {
             if (!regName.test(elem.value)) {
                alert('поле "Ваше имя" заполнено не корректно');
                elem.value = '';
-               isValidate = false;  
-                  
             } else {
-               isValidate = true;
                substr(elem);
                validInput(elem);
             }
@@ -346,9 +341,7 @@ window.addEventListener('DOMContentLoaded', function() {
             if (!regEmail.test(elem.value)) {
                alert('поле "E-mail" заполнено не корректно');
                elem.value = '';
-               isValidate = false; 
             } else {
-               isValidate = true;
                validInput(elem);
             }
          }
@@ -356,9 +349,7 @@ window.addEventListener('DOMContentLoaded', function() {
             if (!regPhone.test(elem.value)) {
                alert('поле "Номер телефона" заполнено не корректно');
                elem.value = '';
-               isValidate = false; 
             } else {
-               isValidate = true;
                validInput(elem);
             }
          }
@@ -366,16 +357,10 @@ window.addEventListener('DOMContentLoaded', function() {
             if (!regMessage.test(elem.value)) {
                alert('поле "Ваше сообщение" заполнено не корректно');
                elem.value = '';
-               isValidate = false; 
             } else {
-               isValidate = true;
                validInput(elem);
             }
          }
-      };
-
-      const submit = () => {
-         alert('данные отправлены');
       };
 
       // перебираем наши формы
@@ -401,16 +386,12 @@ window.addEventListener('DOMContentLoaded', function() {
                   }
                }
             }
-
-            if (isValidate) {
-               submit();
-               item.reset();
-            }
          });
       });
    };
-   // validForm();
-
+   validForm();
+   
+   // калькулятор
    const calc = (price = 100) => {
       const calcBlock= document.querySelector('.calc-block'),
       calcType = document.querySelector('.calc-type'),
@@ -466,4 +447,56 @@ window.addEventListener('DOMContentLoaded', function() {
       });
    };
    calc(100);
+
+   // send-ajax-form
+   const sendForm = () => {
+      const errorMessage = 'Что-то пощло е так',
+         loadMessage = 'Загрузка...',
+         successMessage = 'Спасибо! Мы скоро с вами свяжемся';
+
+      const form = document.querySelectorAll('form');
+      console.log(form);
+      const statusMessage = document.createElement('div');
+      statusMessage.style.cssText = 'font-size: 2rem; color: #ffffff';
+
+      form.forEach (elem => {
+         elem.addEventListener('submit', (event) => {
+            event.preventDefault();
+            elem.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+   
+            const formData = new FormData(elem); // получаем данные через объект formData (создаем экземпляр класса form Data)
+            let body = {}; // создаем объект и будет оправлять его на сервер
+            formData.forEach((val, key) => { // берем значения из formData
+               body[key] = val;
+            });
+            postData(body, 
+               () => {
+                  statusMessage.textContent = successMessage;
+               }, 
+               (error) => {
+                  statusMessage.textContent = errorMessage;
+            });
+            elem.reset();
+         });
+      });
+      
+      const postData = (body, outputData, errorData) => {
+         const request = new XMLHttpRequest(); // создали объект
+         request.addEventListener('readystatechange', () => {
+            if (request.readyState !== 4) {
+               return;
+            }
+            if (request.status === 200) {
+               outputData();
+            } else {
+               errorData(request.status)
+            }
+         });
+         request.open('POST', './server.php'); // настраиваем соединение
+         request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки (1-еимя заголовка, 2-е само значение, сам заголовок)
+         request.send(JSON.stringify(body)); // отправляем данные
+      }
+   };
+   sendForm();
 });
