@@ -414,14 +414,83 @@
 
 <script>
 
-const valid = new Validator({
+const validOne = new Validator({
       selector: '#form1',
-      pattern: {},
-      method: {}
+      pattern: {
+			// phone: /^\+380\d{7}$/,
+			zip: /\d{5,6}/
+		},
+      method: {
+			'user_phone': [
+				['notEmpty'],
+				['pattern', 'phone'],
+				
+			],
+			'user_email': [
+				['notEmpty'],
+				['pattern', 'email'],
+			],
+			'user_name': [
+				['notEmpty'],
+				['pattern', 'name'],
+			]
+		}
    });
 
-   valid.init();
+	const validTwo = new Validator({
+      selector: '#form2',
+      pattern: {
+			// phone: /^\+380\d{7}$/,
+			zip: /\d{5,6}/
+		},
+      method: {
+			'user_phone': [
+				['notEmpty'],
+				['pattern', 'phone'],
+				
+			],
+			'user_email': [
+				['notEmpty'],
+				['pattern', 'email'],
+			],
+			'user_name': [
+				['notEmpty'],
+				['pattern', 'name'],
+			],
+			'user_message': [
+				['notEmpty'],
+				['pattern', 'message'],
+			]
+		},
+   });
+
+	const validThree = new Validator({
+      selector: '#form3',
+      pattern: {
+			// phone: /^\+380\d{7}$/,
+			zip: /\d{5,6}/
+		},
+      method: {
+			'user_phone': [
+				['notEmpty'],
+				['pattern', 'phone'],
+				
+			],
+			'user_email': [
+				['notEmpty'],
+				['pattern', 'email'],
+			],
+			'user_name': [
+				['notEmpty'],
+				['pattern', 'name'],
+			]
+		},
+   });
+
+   validOne.init();
+	validTwo.init();
+	validThree.init();
 </script>
-<!-- <script src="./script/script.js"></script> -->
+<script src="./script/script.js"></script>
 </body>
 </html>

@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
    //модальное окно
    const togglePopUp = () => {
-
+      const formThree = document.querySelector('#form3');
       popupBtn.forEach((elem) => {
          elem.addEventListener('click', () => {
             popup.style.display = 'block';
@@ -95,10 +95,12 @@ window.addEventListener('DOMContentLoaded', function() {
          let target = event.target;
          if (target.classList.contains('popup-close')) {
             popup.style.display = 'none';
+            formThree.reset();
          } else {
             target = target.closest('.popup-content');
             if (!target) {
                popup.style.display = 'none';
+               formThree.reset();
             }
          }
       });
@@ -402,12 +404,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
             if (isValidate) {
                submit();
-               form.reset();
+               item.reset();
             }
          });
       });
    };
-   validForm();
+   // validForm();
 
    const calc = (price = 100) => {
       const calcBlock= document.querySelector('.calc-block'),
@@ -422,16 +424,15 @@ window.addEventListener('DOMContentLoaded', function() {
 
          let count = 0;
 
-         const time = 1500, // время
-            step = 100, // шаг
-            timeStep = Math.round(time/(num/step)), // колличество шагов
+         const time = 50, // время
+            step = num * 10 / 100, // шаг
             interval = setInterval(() => {
-               count = count + step;
+               count += step;
                if (count >= num) {
                   clearInterval(interval);
                }
                elem.innerHTML = count;
-         }, timeStep);
+         }, time);
       };
       
       const countSum = () => {
@@ -454,7 +455,6 @@ window.addEventListener('DOMContentLoaded', function() {
          if (typeValue && squareValue) {
             total = price * typeValue * squareValue * countValue * dayValue;
          }
-
          outNum(total, totalValue);
       };
    
