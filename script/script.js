@@ -449,7 +449,6 @@ window.addEventListener('DOMContentLoaded', function() {
    const sendForm = () => {
       const errorMessage = 'Что-то пощло е так',
          successMessage = 'Спасибо! Мы скоро с вами свяжемся',
-
          form = document.querySelectorAll('form'),
          statusMessage = document.createElement('div');
          statusMessage.classList.add('status-message');
