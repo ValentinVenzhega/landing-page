@@ -101,7 +101,6 @@ window.addEventListener('DOMContentLoaded', function() {
             if (!target) {
                popup.style.display = 'none';
                formThree.reset();
-               
             }
          }
       });

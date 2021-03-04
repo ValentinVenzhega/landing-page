@@ -87,15 +87,22 @@ class Validator {
    applyStyle() {
       const style = document.createElement('style');
       style.textContent = `
-         
+         .main-form input.error {
+            border: 2px solid red;
+         }
+         .main-form input.success {
+            border: 2px solid green;
+         } 
          .connect .footer-form input.error {
             border: 2px solid red;
+            margin-bottom: 28px;
          }
          .connect .footer-form input.success {
             border: 2px solid green;
          }
          .popup input.error {
             border: 2px solid red;
+            margin-bottom: 28px;
          }
          .popup input.success {
             border: 2px solid green;
@@ -108,7 +115,6 @@ class Validator {
          }
       `;
       document.head.appendChild(style);
-
    }
 
    setPattern() {
