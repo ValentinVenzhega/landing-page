@@ -445,24 +445,54 @@ window.addEventListener('DOMContentLoaded', function() {
    };
    calc(100);
 
-
-
    // send-ajax-form
    const sendForm = () => {
       const errorMessage = 'Что-то пощло е так',
-         loadMessage = 'загрузка ...',
          successMessage = 'Спасибо! Мы скоро с вами свяжемся',
 
          form = document.querySelectorAll('form'),
          statusMessage = document.createElement('div');
-
-      statusMessage.style.cssText = 'font-size: 2rem; color: #ffffff';
+         statusMessage.classList.add('status-message');
 
       form.forEach (elem => {
          elem.addEventListener('submit', (event) => {
             event.preventDefault();
             elem.appendChild(statusMessage);
-            statusMessage.append(loadMessage);
+
+            statusMessage.innerHTML = `
+               <div class="mask">
+                  <div class="loader"></div>
+               </div>
+            `;
+
+            const style = document.createElement('style');
+            style.textContent = `
+               .status-message {
+                  font-size: 2rem;
+                  color: #ffffff;
+               }
+               .mask {
+                  z-index: 100;
+                  transition: 0.6s;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+               }
+               .loader {
+                  width: 75px;
+                  height: 75px;
+                  border: 10px solid #19b5fe;
+                  border-radius: 50%;
+                  border-left-color: #1b6e7a;
+                  animation: loader 1.3s linear infinite;
+               }
+               @keyframes loader {
+                  100% {
+                     transform: rotate(360deg);
+                  }
+               }
+            `;
+            document.head.appendChild(style);
    
             const formData = new FormData(elem); // получаем данные через объект formData (создаем экземпляр класса form Data)
             let body = {}; // создаем объект и будет оправлять его на сервер
