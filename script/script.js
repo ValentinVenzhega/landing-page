@@ -409,7 +409,7 @@ window.addEventListener('DOMContentLoaded', function() {
                if (count >= num) {
                   clearInterval(interval);
                }
-               elem.innerHTML = count.toFixed(3);
+               elem.innerHTML = Math.floor(count);
          }, time);
       };
       
