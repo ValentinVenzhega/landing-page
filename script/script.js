@@ -300,7 +300,7 @@ window.addEventListener('DOMContentLoaded', function() {
          regName = /^[А-Яа-я ]{3,20}$/,
          regEmail = /^[a-zA-Z0-9-._~*'!]+@[a-z]+\.[a-z]{2,3}$/,
          regPhone = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
-         regMessage = /^[А-Яа-я0-9 ]{3,250}$/;
+         regMessage = /[А-Яа-я0-9%-:;@"?()!,. ]{3,250}/;
 
       // разрешен ввод только цифр
       calcItem.forEach(item => {
@@ -409,7 +409,7 @@ window.addEventListener('DOMContentLoaded', function() {
                if (count >= num) {
                   clearInterval(interval);
                }
-               elem.innerHTML = count;
+               elem.innerHTML = count.toFixed(3);
          }, time);
       };
       
