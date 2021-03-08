@@ -498,32 +498,35 @@ window.addEventListener('DOMContentLoaded', function() {
             formData.forEach((val, key) => { // берем значения из formData
                body[key] = val;
             });
-            postData(body, 
-               () => {
-                  statusMessage.textContent = successMessage;
-               }, 
-               (error) => {
-                  statusMessage.textContent = errorMessage;
+
+            postData(body)
+            .then(() => {
+               statusMessage.textContent = successMessage;
+            })
+            .catch(error => {
+               statusMessage.textContent = errorMessage;
             });
             elem.reset();
          });
       });
       
-      const postData = (body, outputData, errorData) => {
-         const request = new XMLHttpRequest(); // создали объект
-         request.addEventListener('readystatechange', () => {
-            if (request.readyState !== 4) {
-               return;
-            }
-            if (request.status === 200) {
-               outputData();
-            } else {
-               errorData(request.status)
-            }
+      const postData = (body) => {
+         return new Promise((resolve, reject) => {
+            const request = new XMLHttpRequest(); // создали объект
+            request.addEventListener('readystatechange', () => {
+               if (request.readyState !== 4) {
+                  return;
+               }
+               if (request.status === 200) {
+                  resolve();
+               } else {
+                  reject(request.status);
+               }
+            });
+            request.open('POST', './server.php'); // настраиваем соединение
+            request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки (1-еимя заголовка, 2-е само значение, сам заголовок)
+            request.send(JSON.stringify(body)); // отправляем данные
          });
-         request.open('POST', './server.php'); // настраиваем соединение
-         request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки (1-еимя заголовка, 2-е само значение, сам заголовок)
-         request.send(JSON.stringify(body)); // отправляем данные
       }
    };
    sendForm();
