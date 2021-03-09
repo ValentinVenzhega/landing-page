@@ -463,36 +463,39 @@ window.addEventListener('DOMContentLoaded', function() {
                   <div class="loader"></div>
                </div>
             `;
-
-            const style = document.createElement('style');
-            style.textContent = `
-               .status-message {
-                  font-size: 2rem;
-                  color: #ffffff;
-               }
-               .mask {
-                  z-index: 100;
-                  transition: 0.6s;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-               }
-               .loader {
-                  width: 75px;
-                  height: 75px;
-                  border: 10px solid #19b5fe;
-                  border-radius: 50%;
-                  border-left-color: #1b6e7a;
-                  animation: loader 1.3s linear infinite;
-               }
-               @keyframes loader {
-                  100% {
-                     transform: rotate(360deg);
+            const myStyle = document.querySelector('#my-style');
+            if(!myStyle) {
+               const style = document.createElement('style');
+               style.setAttribute('id', 'my-style');
+               style.textContent = `
+                  .status-message {
+                     font-size: 2rem;
+                     color: #ffffff;
                   }
-               }
-            `;
-            document.head.appendChild(style);
-   
+                  .mask {
+                     z-index: 100;
+                     transition: 0.6s;
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                  }
+                  .loader {
+                     width: 75px;
+                     height: 75px;
+                     border: 10px solid #19b5fe;
+                     border-radius: 50%;
+                     border-left-color: #1b6e7a;
+                     animation: loader 1.3s linear infinite;
+                  }
+                  @keyframes loader {
+                     100% {
+                        transform: rotate(360deg);
+                     }
+                  }
+               `;
+               document.head.appendChild(style);
+            }
+
             const formData = new FormData(elem); // получаем данные через объект formData (создаем экземпляр класса form Data)
             let body = {}; // создаем объект и будет оправлять его на сервер
             formData.forEach((val, key) => { // берем значения из formData
@@ -505,10 +508,12 @@ window.addEventListener('DOMContentLoaded', function() {
                   throw new Error('status networking not 200');
                } else {
                   statusMessage.textContent = successMessage;
+                  setTimeout(() => statusMessage.textContent = '', 2000);
                }
             })
             .catch((error) => {
                statusMessage.textContent = errorMessage;
+               setTimeout(() => statusMessage.textContent = '', 2000);
             });
             elem.reset();
          });
@@ -523,6 +528,7 @@ window.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(body)
          });
       }
+      
    };
    sendForm();
 });
