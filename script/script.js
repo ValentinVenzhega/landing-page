@@ -506,7 +506,6 @@ window.addEventListener('DOMContentLoaded', function() {
                } else {
                   statusMessage.textContent = successMessage;
                }
-               
             })
             .catch((error) => {
                statusMessage.textContent = errorMessage;
@@ -523,22 +522,6 @@ window.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(body)
          });
-         // return new Promise((resolve, reject) => {
-         //    const request = new XMLHttpRequest(); // создали объект
-         //    request.addEventListener('readystatechange', () => {
-         //       if (request.readyState !== 4) {
-         //          return;
-         //       }
-         //       if (request.status === 200) {
-         //          resolve();
-         //       } else {
-         //          reject(request.status);
-         //       }
-         //    });
-         //    request.open('POST', './server.php'); // настраиваем соединение
-         //    request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки (1-еимя заголовка, 2-е само значение, сам заголовок)
-         //    request.send(JSON.stringify(body)); // отправляем данные
-         // });
       }
    };
    sendForm();
