@@ -447,7 +447,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
    // send-ajax-form
    const sendForm = () => {
-      const errorMessage = 'Что-то пощло е так',
+      const errorMessage = 'Что-то пошло не так',
          successMessage = 'Спасибо! Мы скоро с вами свяжемся',
          form = document.querySelectorAll('form'),
          statusMessage = document.createElement('div');
@@ -500,10 +500,15 @@ window.addEventListener('DOMContentLoaded', function() {
             });
 
             postData(body)
-            .then(() => {
-               statusMessage.textContent = successMessage;
+            .then((response) => {
+               if (response.status !== 200) {
+                  throw new Error('status networking not 200');
+               } else {
+                  statusMessage.textContent = successMessage;
+               }
+               
             })
-            .catch(error => {
+            .catch((error) => {
                statusMessage.textContent = errorMessage;
             });
             elem.reset();
@@ -511,22 +516,29 @@ window.addEventListener('DOMContentLoaded', function() {
       });
       
       const postData = (body) => {
-         return new Promise((resolve, reject) => {
-            const request = new XMLHttpRequest(); // создали объект
-            request.addEventListener('readystatechange', () => {
-               if (request.readyState !== 4) {
-                  return;
-               }
-               if (request.status === 200) {
-                  resolve();
-               } else {
-                  reject(request.status);
-               }
-            });
-            request.open('POST', './server.php'); // настраиваем соединение
-            request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки (1-еимя заголовка, 2-е само значение, сам заголовок)
-            request.send(JSON.stringify(body)); // отправляем данные
+         return fetch('./server.php', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
          });
+         // return new Promise((resolve, reject) => {
+         //    const request = new XMLHttpRequest(); // создали объект
+         //    request.addEventListener('readystatechange', () => {
+         //       if (request.readyState !== 4) {
+         //          return;
+         //       }
+         //       if (request.status === 200) {
+         //          resolve();
+         //       } else {
+         //          reject(request.status);
+         //       }
+         //    });
+         //    request.open('POST', './server.php'); // настраиваем соединение
+         //    request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки (1-еимя заголовка, 2-е само значение, сам заголовок)
+         //    request.send(JSON.stringify(body)); // отправляем данные
+         // });
       }
    };
    sendForm();
