@@ -1,15 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
    'use strict';
 
-   const menu = document.querySelector('menu'), // menu
-      // мрдальное окно
-      popup = document.querySelector('.popup'),
-      popupBtn = document.querySelectorAll('.popup-btn'),
-      popupContent = document.querySelector('.popup-content'),
-      // прокрутка
-      elemLink = document.querySelectorAll('ul>li>a'),
-      btnMouse = document.querySelector('main>a');
-
    function countTimer(deadline) {
       let timerHours = document.querySelector('#timer-hours'),
          timerMinutes = document.querySelector('#timer-minutes'),
@@ -51,7 +42,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
    // меню
    const toggleMenu = () => {
-
+      const menu = document.querySelector('menu');
       const handlerMenu = () => {
          menu.classList.toggle('active-menu');
       };
@@ -73,8 +64,11 @@ window.addEventListener('DOMContentLoaded', function() {
 
    //модальное окно
    const togglePopUp = () => {
-      const formThree = document.querySelector('#form3');
-      popupBtn.forEach((elem) => {
+      const popup = document.querySelector('.popup'),
+         popupBtn = document.querySelectorAll('.popup-btn'),
+         popupContent = document.querySelector('.popup-content'),
+         formThree = document.querySelector('#form3');
+         popupBtn.forEach((elem) => {
          elem.addEventListener('click', () => {
             popup.style.display = 'block';
             let start = Date.now();
@@ -138,6 +132,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
    // прокрутка страницы
    const scrollBlock = () => {
+      const elemLink = document.querySelectorAll('ul>li>a'),
+         btnMouse = document.querySelector('main>a');
       elemLink.forEach((item) => {
          item.addEventListener('click', scrollDown);
       });
