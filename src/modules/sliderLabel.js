@@ -1,5 +1,4 @@
 const sliderLabel = () => {
-
    class SliderCarousel {
          constructor({ 
             main, 
@@ -169,7 +168,6 @@ const sliderLabel = () => {
             };
 
             checkResponse();
-
             window.addEventListener('resize', checkResponse);
          }
       }
