@@ -2,11 +2,16 @@ const validForm = () => {
    const form = document.querySelectorAll('form'),
       calcBlock = document.querySelector('.calc-block'),
       calcItem = calcBlock.querySelectorAll('input'),
+      formBtn = document.querySelectorAll('.form-btn')[0],
+      inputEmail = document.querySelectorAll('input[name="user_email"]'),
 
-      regName = /^[А-Яа-я ]{3,20}$/,
+      regName = /^[А-Яа-я ]{2,20}$/,
       regEmail = /^[a-zA-Z0-9-._~*'!]+@[a-z]+\.[a-z]{2,3}$/,
       regPhone = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
       regMessage = /[А-Яа-я0-9%-:;@"?()!,. ]{3,250}/;
+
+   // добавляем обязательно заполнение поля email
+   inputEmail.forEach(elem => elem.required = true);
 
    // разрешен ввод только цифр
    calcItem.forEach(item => {
@@ -36,35 +41,40 @@ const validForm = () => {
    const validateElem = (elem) => {
       if (elem.name === 'user_name' && elem.value !== '') {
          if (!regName.test(elem.value)) {
-            alert('поле "Ваше имя" заполнено не корректно');
+            elem.style.border = '3px solid red';
             elem.value = '';
          } else {
             substr(elem);
             validInput(elem);
+            elem.style.border = '3px solid green';
          }
       }
       if (elem.name === 'user_email' && elem.value !== '') {
          if (!regEmail.test(elem.value)) {
-            alert('поле "E-mail" заполнено не корректно');
+            elem.style.border = '3px solid red';
             elem.value = '';
          } else {
             validInput(elem);
+            elem.style.border = '3px solid green';
          }
       }
       if (elem.name === 'user_phone' && elem.value !== '') {
          if (!regPhone.test(elem.value)) {
-            alert('поле "Номер телефона" заполнено не корректно');
+            elem.style.border = '3px solid red';
             elem.value = '';
          } else {
             validInput(elem);
+            elem.style.border = '3px solid green';
          }
       }
       if (elem.name === 'user_message' && elem.value !== '') {
          if (!regMessage.test(elem.value)) {
-            alert('поле "Ваше сообщение" заполнено не корректно');
+            // alert('поле "Ваше сообщение" заполнено не корректно');
+            elem.style.border = '3px solid red';
             elem.value = '';
          } else {
             validInput(elem);
+            elem.style.border = '3px solid green';
          }
       }
    };
@@ -84,9 +94,9 @@ const validForm = () => {
 
          for (let elem of item.elements) {
             if (elem.tagName !== 'BUTTON') {
-               if (elem.value === '') {
-                  alert('поля не заполнены');
-               } 
+               if (elem.value !== '') {
+                  elem.style.border = 'none';
+               }
             }
          }
       });
