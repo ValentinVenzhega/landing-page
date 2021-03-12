@@ -76,7 +76,6 @@ const sendForm = () => {
             }, 2000);
          });
          elem.reset();
-         
       });
    });
    
