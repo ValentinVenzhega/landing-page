@@ -6,10 +6,12 @@ import togglePopUp from './modules/togglePopUp';
 import scrollBlock from './modules/scrollBlock';
 import tabs from './modules/tabs';
 import slider from './modules/slider';
+import sliderLabel from './modules/sliderLabel';
 import showFoto from './modules/showFoto';
 import validForm from './modules/validForm';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
+
 
 
 //таймер
@@ -32,6 +34,9 @@ tabs();
 
 // слайдер
 slider();
+
+// слайдер карусель
+sliderLabel();
 
 // смена фото
 showFoto();
