@@ -1,11 +1,4 @@
 const sliderLabel = () => {
-   // const sliderCarousel = () => {
-
-      
-   
-      
-   // };
-   // sliderCarousel();
 
    class SliderCarousel {
          constructor({ 
